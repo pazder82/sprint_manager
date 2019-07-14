@@ -1,0 +1,29 @@
+<%= form_with(model: @team, local: true) do |form| %>
+
+  <% if @team.errors.any? %>
+    <div id="error_explanation">
+      <h3>
+        Wrong <%= pluralize(@team.errors.count, "value") %>:
+      </h3>
+      <ul>
+        <% @team.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= form.label :team %><br>
+    <%= form.text_field :team %>
+  </p>
+
+  <p>
+    <%= form.label :sprint %><br>
+    <%= form.text_field :sprint %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

@@ -1,0 +1,25 @@
+<h2>Sprint Teams</h2>
+
+<p>
+  <%= link_to 'New team', new_team_path %>
+</p>
+
+<table>
+  <tr>
+    <th>Team</th>
+    <th>Sprint</th>
+    <th>Operations</th>
+  </tr>
+
+  <% @teams.each do |team| %>
+    <tr>
+      <td><%= team.team %></td>
+      <td><%= team.sprint %></td>
+      <td><%= link_to 'Show', team_path(team) %>&nbsp<%= link_to 'Edit', edit_team_path(team) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'sprint_manager', :plugin => 'sprint_manager' %>
+<% end %>
