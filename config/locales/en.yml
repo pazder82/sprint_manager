@@ -1,3 +1,4 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  permission_manage_teams: Manage teams
+  label_teams: Sprint teams

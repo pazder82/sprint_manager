@@ -5,18 +5,26 @@
 </p>
 
 <table>
-  <tr>
-    <th>Team</th>
-    <th>Sprint</th>
-    <th>Operations</th>
-  </tr>
+  <thead>
+    <tr>
+      <th>Team</th>
+      <th>Sprint</th>
+      <th>Operations</th>
+    </tr>
+  </thead>
 
   <% @teams.each do |team| %>
-    <tr>
-      <td><%= team.team %></td>
-      <td><%= team.sprint %></td>
-      <td><%= link_to 'Show', team_path(team) %>&nbsp<%= link_to 'Edit', edit_team_path(team) %></td>
-    </tr>
+    <tbody>
+      <tr>
+        <td><%= team.team %></td>
+        <td><%= team.sprint %></td>
+        <td>
+          <%= link_to 'Show', team_path(team) %>&nbsp
+          <%= link_to 'Edit', edit_team_path(team) %>&nbsp
+          <%= link_to 'Delete', team_path(team), method: :delete, data: { confirm: 'Are you sure?' } %>&nbsp
+        </td>
+      </tr>
+    </tbody>
   <% end %>
 </table>
 
