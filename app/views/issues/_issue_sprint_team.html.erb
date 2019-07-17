@@ -1,0 +1,6 @@
+<%= issue_fields_rows do |rows|
+  rows.left l(:label_team), @issue.team.to_s
+  end if @issue.team %>
+
+
+<%= javascript_tag "linkableAttributeFields();" %>
