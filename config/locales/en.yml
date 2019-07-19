@@ -2,4 +2,5 @@
 en:
   permission_manage_teams: Manage teams
   label_teams: Sprint teams
-  label_team: Sprint team
+  label_team: Team
+  label_sprint: Sprint
