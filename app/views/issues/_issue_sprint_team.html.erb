@@ -1,6 +1,6 @@
 <%= issue_fields_rows do |rows|
   rows.right l(:label_team), @issue.team.to_s
-  rows.right l(:label_sprint), @issue.sprint.to_s
+  rows.right l(:label_sprint), @issue.issue_sprint.to_s
   end if @issue.team %>
 
 

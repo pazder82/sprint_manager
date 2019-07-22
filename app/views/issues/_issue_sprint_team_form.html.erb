@@ -1,7 +1,14 @@
 <div class="splitcontentright">
-    <%= form.fields_for :team do |f| %>
+    <%= fields_for :issue_teams_data do |f| %>
+    <%#= instance_variable_names.inspect %>
       <p>
-        <%= f.text_field :team, :size => 20, :required => @issue.required_attribute?('agile_data_attributes') %>
+        <%= f.label :team %>
+        <%= f.select :team, Team.all.collect {|p| [ p.team, p.id ] },
+                     :include_blank => true, :selected => @issue.team_id %>
+      </p>
+      <p>
+        <%= f.label :sprint %>
+        <%= f.text_field :sprint, value: @issue.issue_sprint %>
       </p>
     <% end %>
 </div>

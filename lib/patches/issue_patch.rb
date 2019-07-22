@@ -1,6 +1,5 @@
 #require 'pry'
 require_dependency 'issue'
-require_dependency 'sprint_teams'
 
 module SprintTeams
   module Patches
@@ -11,6 +10,7 @@ module SprintTeams
         base.class_eval do
           unloadable
           has_one :teams, :dependent => :destroy
+          has_one :issue_teams_data, :dependent => :destroy
          end
       end
 
@@ -22,15 +22,31 @@ module SprintTeams
           #binding.pry
         end
 
-        def sprint
+        def team_id
+          if r = get_team_relation
+            r.id
+          end
+        end
+
+        def team_sprint
           if r = get_team_relation
             r.sprint
           end
         end
 
+        def issue_sprint
+          if r = IssueTeamsData.find_by(issues_id: id)
+            r.sprint
+          end
+        end
+
+        def print_inspect
+          binding.pry
+        end
+
         private
           def get_team_relation
-            return Team.joins('inner join teams_relations on teams.id = teams_relations.teams_id').find_by('teams_relations.issues_id' => id)
+            return Team.joins('inner join issue_teams_data on teams.id = issue_teams_data.teams_id').find_by('issue_teams_data.issues_id' => id)
           end
       end
     end
