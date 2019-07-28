@@ -11,7 +11,6 @@ module SprintTeams
       Team.all.each do |team|
         team.team
       end
-      #Setting.plugin_redmine_agile['sp_values'].to_s.split(',').map{|x| x.strip.to_i}.uniq.delete_if{|x| x == 0}
     end
   end
 

@@ -9,6 +9,39 @@
       <p>
         <%= f.label :sprint %>
         <%= f.text_field :sprint, value: @issue.issue_sprint %>
+        <%= button_tag "Current", type: 'button', onclick: "setCurrentSprint()" %>
+        <%= button_tag "Next", type: 'button', onclick: "setNextSprint()" %>
       </p>
     <% end %>
 </div>
+
+<%= javascript_tag  do -%>
+  function setCurrentSprint(){
+    document.getElementById('issue_teams_data_sprint').value=getSelectedTeamSprint();
+  }
+
+  function setNextSprint(){
+    sprint = getSelectedTeamSprint();
+    if (sprint) {
+      sprint++;
+    }
+    document.getElementById('issue_teams_data_sprint').value=sprint;
+  }
+
+  function getSelectedTeamSprint() {
+    var e = document.getElementById('issue_teams_data_team');
+    var issue_team_id = e.options[e.selectedIndex].value;
+    var rj = $('<textarea />').html("<%= @issue.team_sprints %>").text(); // parse rails output to valid json string
+    var team_sprints = JSON.parse(rj);
+    if (!issue_team_id) {
+      return '';
+    }
+    for (var i = 0; i < team_sprints.length; i++) {
+      var t = team_sprints[i];
+      if (t.id == issue_team_id) {
+        return t.sprint;
+      }
+    }
+  }
+
+<% end -%>

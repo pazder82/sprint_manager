@@ -19,7 +19,6 @@ module SprintTeams
           if r = get_team_relation
             r.team
           end
-          #binding.pry
         end
 
         def team_id
@@ -31,6 +30,12 @@ module SprintTeams
         def team_sprint
           if r = get_team_relation
             r.sprint
+          end
+        end
+
+        def team_sprints
+          if r = Team.all
+            r.to_json
           end
         end
 
