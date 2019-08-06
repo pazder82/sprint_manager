@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+#  before_action :authorize_global, except: [:index, :show]
 
   def index
     @teams = Team.all

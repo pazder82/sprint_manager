@@ -40,7 +40,7 @@ module SprintTeams
         end
 
         def issue_sprint
-          if r = IssueTeamsData.find_by(issues_id: id)
+          if r = IssueTeamsDatum.find_by(issues_id: id)
             r.sprint
           end
         end

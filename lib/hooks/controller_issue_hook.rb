@@ -16,10 +16,10 @@ module SprintTeams
 
         # Update model
         changed = false
-        new_value = IssueTeamsData.find_by('issues_id' => context[:issue].id)
+        new_value = IssueTeamsDatum.find_by('issues_id' => context[:issue].id)
         if !new_value
           # Not yet existing in table - create new row
-          new_value = IssueTeamsData.new
+          new_value = IssueTeamsDatum.new
           new_value[:issues_id] = context[:issue].id
         end
         if (new_team_id != old_team_id)
