@@ -1,6 +1,8 @@
+
 require 'hooks/views_issues_hook'
 require 'hooks/controller_issue_hook'
 require 'patches/issue_patch'
+require 'patches/query_patch'
 
 module SprintTeams
 
