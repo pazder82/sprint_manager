@@ -51,6 +51,7 @@ module SprintTeams
 
             clauses << ' AND ' unless clauses.empty?
             clauses << "( #{Issue.table_name}.id #{compare} (#{ids_list}) ) "
+            #binding.pry
           end
 
           clauses
@@ -58,12 +59,13 @@ module SprintTeams
 
         def available_filters_with_sprint_teams
           available_filters_without_sprint_teams
-          #selected_tags = []
+          teams_list = []
+          teams_list = [["Bug", "1"], ["Feature", "2"], ["Support", "3"]]
           #if filters['issue_tags'].present?
           #  selected_tags = Issue.all_tags(:project => project, :open_only => RedmineTags.settings['issues_open_only'].to_i == 1).
           #      where(:name => filters['issue_tags'][:values]).map { |c| [c.name, c.name] }
           #end
-          add_available_filter('issue_teams', type: :issue_teams, name: l(:filter_team), values: 42)
+          add_available_filter('issue_teams', type: :list, name: l(:filter_team), values: teams_list)
         end
       end
     end
