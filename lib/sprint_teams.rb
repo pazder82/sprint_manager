@@ -10,7 +10,7 @@ module SprintTeams
 
   class << self
     def teams_values
-      Team.all.each do |team|
+      Team.find_each do |team|
         team.team
       end
     end
