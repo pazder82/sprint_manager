@@ -18,12 +18,8 @@ module SprintTeams
           alias_method :available_filters_without_sprint_teams, :available_filters
           alias_method :available_filters, :available_filters_with_sprint_teams
 
-          add_available_column QueryTagsColumn.new(:teams_relations, caption: :teams)
+          #add_available_column QueryTagsColumn.new(:teams_relations, caption: :teams)
         end
-      end
-
-      class QueryTagsColumn < QueryColumn
-        def css_classes; 'teams' end
       end
 
       module InstanceMethods
@@ -33,24 +29,23 @@ module SprintTeams
 
           if filter
             filters['issue_teams'] = filter
-
-            issues = Issue.where({})
-
             op = operator_for('issue_teams')
-            case op
-            when '=', '!'
-              issues = issues.tagged_with(values_for('issue_teams').clone)
-            when '!*'
-              issues = issues.joins(:teams).uniq
+            if op.include?('!')
+              compare = 'NOT IN'
+              empty_ids_clause = 'TRUE'
             else
-              issues = issues.tagged_with(RedmineCrm::Tag.all.map(&:to_s), :any => true)
+              compare = 'IN'
+              empty_ids_clause = 'FALSE'
             end
 
-            compare   = op.include?('!') ? 'NOT IN' : 'IN'
-            ids_list  = issues.collect(&:id).push(0).join(',')
-
             clauses << ' AND ' unless clauses.empty?
-            clauses << "( #{Issue.table_name}.id #{compare} (#{ids_list}) ) "
+            issue_ids = IssueTeamsDatum.where(teams_id: values_for('issue_teams')) # find issue ids with this team assigned
+            if issue_ids.any?
+              clauses << "( #{Issue.table_name}.id #{compare} (#{issue_ids.map(&:issues_id).join(',')}) ) "
+            else
+              # no issue ids found for this team
+              clauses << empty_ids_clause
+            end
             #binding.pry
           end
 
