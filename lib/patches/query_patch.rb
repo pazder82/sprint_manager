@@ -54,8 +54,9 @@ module SprintTeams
 
         def available_filters_with_sprint_teams
           available_filters_without_sprint_teams
-          teams_list = Team.all.map { |c| [ c.team, c.id ] }
+          teams_list = Team.all.map { |c| [ c.team, c.id.to_s ] }
           add_available_filter('issue_teams', type: :list, name: l(:filter_team), values: teams_list)
+          add_available_filter('issue_sprint', type: :integer, name: l(:filter_sprint))
         end
       end
     end
