@@ -1,4 +1,3 @@
-<div class="splitcontentright">
     <%= fields_for :issue_teams_data do |f| %>
     <%#= instance_variable_names.inspect %>
       <p>
@@ -13,7 +12,6 @@
         <%= button_tag "Next", type: 'button', onclick: "setNextSprint()" %>
       </p>
     <% end %>
-</div>
 
 <%= javascript_tag  do -%>
   function setCurrentSprint(){
