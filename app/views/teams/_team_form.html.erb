@@ -1,4 +1,7 @@
-<%= form_with(model: @team, local: true) do |form| %>
+<%# Ruby 5.1 %>
+<%#= form_with(model: @team, local: true) do |form| %>
+<%# Ruby < 5.1 %>
+<%= form_for(@team, local: true) do |form| %>
 
   <% if @team.errors.any? %>
     <div id="error_explanation">
