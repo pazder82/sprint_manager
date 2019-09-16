@@ -1,8 +1,15 @@
 module SprintTeams
   module Hooks
     class ControllerIssueHook < Redmine::Hook::ViewListener
+      def controller_issues_bulk_edit_before_save(context={})
+        save_sprint_teams_values(context)
+      end
 
       def controller_issues_edit_after_save(context={})
+        save_sprint_teams_values(context)
+      end
+
+      def save_sprint_teams_values(context)
         # Current SprintTeam values for this issue
         old_value = Issue.find(context[:issue].id)
         old_team_id = old_value.team_id.to_s
@@ -10,9 +17,23 @@ module SprintTeams
 
         # New SprintTeam values inserted by user
         new_team_id = context[:params][:issue_teams_data][:team]
-        new_team_id = nil if new_team_id.blank?
+        if new_team_id.blank?
+          if context[:params][:action] == "bulk_update"
+            new_team_id = old_team_id
+          else
+            new_team_id = nil
+          end
+        end
+
         new_issue_sprint = context[:params][:issue_teams_data][:sprint]
-        new_issue_sprint = nil if new_issue_sprint.blank? || new_team_id.blank?
+        if new_issue_sprint.blank?
+          if context[:params][:action] == "bulk_update"
+            new_issue_sprint = old_issue_sprint
+          else
+            new_issue_sprint = nil
+          end
+        end
+        new_issue_sprint = nil if new_team_id.blank?
 
         # Update model
         changed = false

@@ -1,10 +1,12 @@
 Redmine::Plugin.register :sprint_manager do
   name 'Sprint Manager plugin'
   author 'Jan Pazdera '
-  description 'This plugin introduces, sprints, sprint teams and tools for their easy management.'
+  description 'This plugin introduces sprints, sprint teams and tools for their easy management.'
   version '0.0.1'
   url 'http://www.flowmon.com'
   author_url 'http://www.flowmon.com'
+
+  settings :default => {'empty' => true}, :partial => 'settings/general'
 
   menu :application_menu, :teams, { :controller => 'teams', :action => 'index' },
       :caption => :label_teams,

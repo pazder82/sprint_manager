@@ -1,0 +1,17 @@
+<p>
+  Selected: <%= settings['sprint_teams_managers'] %>
+  Current user: <%= User.current %> User.current.allowed_to?(:edit_tags, @project)
+</p>
+<table>
+  <tbody>
+  <tr>
+    <th>Sprint Teams Managers</th>
+    <td>
+      <%= select_tag 'settings[sprint_teams_managers]',
+          options_for_select(User.where("login <> ''").collect{|p| [p.firstname+" "+p.lastname, p.login]},
+                             settings['sprint_teams_managers']),
+          :multiple => true, :size => 10, :style => "width:150px" %>
+    </td>
+  </tr>
+  </tbody>
+</table>

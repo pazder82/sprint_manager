@@ -1,18 +1,25 @@
     <%= fields_for :issue_teams_data do |f| %>
     <%#= instance_variable_names.inspect %>
+    <%# {"ids"=>["3", "4", "5"]} %>
       <p>
         <%= f.label :team %>
         <%= f.select :team, Team.all.collect {|p| [ p.team, p.id ] },
-                     :include_blank => true, :selected => @issue.team_id %>
+                     :include_blank => (params[:action] != 'bulk_edit') ? true : t(:label_no_change_option),
+                     :selected => params[:action] != 'bulk_edit' ? @issue.team_id : '' %>
       </p>
       <p>
         <%= f.label :sprint %>
-        <%= f.text_field :sprint, value: @issue.issue_sprint %>
-        <%= button_tag "Current", type: 'button', onclick: "setCurrentSprint()" %>
-        <%= button_tag "Next", type: 'button', onclick: "setNextSprint()" %>
+        <% if params[:action] == 'bulk_edit' -%>
+          <%= f.text_field :sprint %>
+        <% else -%>
+          <%= f.text_field :sprint, value: @issue.issue_sprint %>
+          <%= button_tag "Current", type: 'button', onclick: "setCurrentSprint()" %>
+          <%= button_tag "Next", type: 'button', onclick: "setNextSprint()" %>
+        <% end -%>
       </p>
     <% end %>
 
+<% if params[:action] != 'bulk_edit' %>
 <%= javascript_tag  do -%>
   function setCurrentSprint(){
     document.getElementById('issue_teams_data_sprint').value=getSelectedTeamSprint();
@@ -42,4 +49,5 @@
     }
   }
 
+<% end -%>
 <% end -%>
