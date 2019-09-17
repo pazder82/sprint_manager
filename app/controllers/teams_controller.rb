@@ -6,7 +6,7 @@ class TeamsController < ApplicationController
   end
 
   def create
-    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+    if Setting["plugin_sprint_manager"]["sprint_teams_managers"].include?(User.current.login)
       @team = Team.new(team_params)
       if @team.save
         redirect_to @team
@@ -19,7 +19,7 @@ class TeamsController < ApplicationController
   end
 
   def new
-    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+    if Setting["plugin_sprint_manager"]["sprint_teams_managers"].include?(User.current.login)
       @team = Team.new
     else
       redirect_to teams_path
@@ -27,7 +27,7 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+    if Setting["plugin_sprint_manager"]["sprint_teams_managers"].include?(User.current.login)
       @team = Team.find(params[:id])
     else
       redirect_to teams_path
@@ -39,7 +39,7 @@ class TeamsController < ApplicationController
   end
 
   def update
-    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+    if Setting["plugin_sprint_manager"]["sprint_teams_managers"].include?(User.current.login)
       @team = Team.find(params[:id])
       if @team.update(team_params)
         redirect_to @team
@@ -52,7 +52,7 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+    if Setting["plugin_sprint_manager"]["sprint_teams_managers"].include?(User.current.login)
       @team = Team.find(params[:id])
       @team.destroy
     end

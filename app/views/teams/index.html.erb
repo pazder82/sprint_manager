@@ -1,7 +1,7 @@
 <h2>Sprint Teams</h2>
 
 <p>
-  <% if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login) %>
+  <% if Setting["plugin_sprint_manager"]["sprint_teams_managers"].include?(User.current.login) %>
     <%= link_to 'New team', new_team_path %>
   <% end %>
 </p>
@@ -22,7 +22,7 @@
         <td><%= team.sprint %></td>
         <td>
           <%= link_to 'Show', team_path(team) %>&nbsp
-          <% if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login) %>
+          <% if Setting["plugin_sprint_manager"]["sprint_teams_managers"].include?(User.current.login) %>
             <%= link_to 'Edit', edit_team_path(team) %>&nbsp
             <%= link_to 'Delete', team_path(team), method: :delete, data: { confirm: 'Are you sure?' } %>&nbsp
           <% end %>
