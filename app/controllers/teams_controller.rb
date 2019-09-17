@@ -2,7 +2,6 @@ class TeamsController < ApplicationController
 #  before_action :authorize_global, except: [:index, :show]
 
   def index
-    #binding.pry
     @teams = Team.all
   end
 

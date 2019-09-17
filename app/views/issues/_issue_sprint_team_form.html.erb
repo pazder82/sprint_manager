@@ -13,13 +13,12 @@
           <%= f.text_field :sprint %>
         <% else -%>
           <%= f.text_field :sprint, value: @issue.issue_sprint %>
-          <%= button_tag "Current", type: 'button', onclick: "setCurrentSprint()" %>
-          <%= button_tag "Next", type: 'button', onclick: "setNextSprint()" %>
         <% end -%>
+        <%= button_tag "Current", type: 'button', onclick: "setCurrentSprint()" %>
+        <%= button_tag "Next", type: 'button', onclick: "setNextSprint()" %>
       </p>
     <% end %>
 
-<% if params[:action] != 'bulk_edit' %>
 <%= javascript_tag  do -%>
   function setCurrentSprint(){
     document.getElementById('issue_teams_data_sprint').value=getSelectedTeamSprint();
@@ -36,7 +35,7 @@
   function getSelectedTeamSprint() {
     var e = document.getElementById('issue_teams_data_team');
     var issue_team_id = e.options[e.selectedIndex].value;
-    var rj = $('<textarea />').html("<%= @issue.team_sprints %>").text(); // parse rails output to valid json string
+    var rj = $('<textarea />').html("<%= Issue.first.team_sprints %>").text(); // parse rails output to valid json string
     var team_sprints = JSON.parse(rj);
     if (!issue_team_id) {
       return '';
@@ -49,5 +48,4 @@
     }
   }
 
-<% end -%>
 <% end -%>
