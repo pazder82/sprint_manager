@@ -6,20 +6,32 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = Team.new(team_params)
-    if @team.save
-      redirect_to @team
+    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+      @team = Team.new(team_params)
+      if @team.save
+        redirect_to @team
+      else
+        render 'new'
+      end
     else
-      render 'new'
+      redirect_to teams_path
     end
   end
 
   def new
-    @team = Team.new
+    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+      @team = Team.new
+    else
+      redirect_to teams_path
+    end
   end
 
   def edit
-    @team = Team.find(params[:id])
+    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+      @team = Team.find(params[:id])
+    else
+      redirect_to teams_path
+    end
   end
 
   def show
@@ -27,18 +39,23 @@ class TeamsController < ApplicationController
   end
 
   def update
-    @team = Team.find(params[:id])
-
-    if @team.update(team_params)
-      redirect_to @team
+    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+      @team = Team.find(params[:id])
+      if @team.update(team_params)
+        redirect_to @team
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      redirect_to teams_path
     end
   end
 
   def destroy
-    @team = Team.find(params[:id])
-    @team.destroy
+    if Setting[:plugin_sprint_manager][:sprint_teams_managers].include?(User.current.login)
+      @team = Team.find(params[:id])
+      @team.destroy
+    end
     redirect_to teams_path
   end
 
