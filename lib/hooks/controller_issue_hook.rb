@@ -16,7 +16,7 @@ module SprintTeams
         old_issue_sprint = old_value.issue_sprint.to_s
 
         # New SprintTeam values inserted by user
-        new_team_id = context[:params][:issue_teams_data][:team]
+        new_team_id = context[:params][:issue_teams_data][:team] if context[:params][:issue_teams_data]
         if new_team_id.blank?
           if context[:params][:action] == "bulk_update"
             new_team_id = old_team_id
@@ -25,7 +25,7 @@ module SprintTeams
           end
         end
 
-        new_issue_sprint = context[:params][:issue_teams_data][:sprint]
+        new_issue_sprint = context[:params][:issue_teams_data][:sprint] if context[:params][:issue_teams_data]
         if new_issue_sprint.blank?
           if context[:params][:action] == "bulk_update"
             new_issue_sprint = old_issue_sprint
