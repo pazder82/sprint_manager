@@ -43,9 +43,9 @@ module SprintTeams
               empty_ids_clause = 'FALSE'
             end
             clauses << ' AND ' unless clauses.empty?
-            issue_ids = IssueTeamsDatum.where(teams_id: values_for('issue_teams')) # find issue ids with this team assigned
+            issue_ids = IssueTeamsDatum.where(team_id: values_for('issue_teams')) # find issue ids with this team assigned
             if issue_ids.any?
-              clauses << "( #{Issue.table_name}.id #{compare} (#{issue_ids.map(&:issues_id).join(',')}) ) "
+              clauses << "( #{Issue.table_name}.id #{compare} (#{issue_ids.map(&:issue_id).join(',')}) ) "
             else
               # no issue ids found for this team
               clauses << empty_ids_clause
@@ -82,7 +82,7 @@ module SprintTeams
 
             clauses << ' AND ' unless clauses.empty?
             if issue_ids.any?
-              clauses << "( #{Issue.table_name}.id IN (#{issue_ids.map(&:issues_id).join(',')}) ) "
+              clauses << "( #{Issue.table_name}.id IN (#{issue_ids.map(&:issue_id).join(',')}) ) "
             else
               # no issue ids found for this team
               clauses << 'FALSE'

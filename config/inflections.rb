@@ -1,5 +1,4 @@
 #ActiveSupport::Inflector.inflections do |inflect|
-
-#  inflect.irregular 'issue_teams_datum', 'issue_teams_data' # or whatever you want your plural to be
-
+#  inflect.irregular 'team', 'teams'
+#  inflect.irregular 'issue_teams_datum', 'issue_teams_data'
 #end
