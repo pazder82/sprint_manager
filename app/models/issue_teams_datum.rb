@@ -1,4 +1,4 @@
 class IssueTeamsDatum < ActiveRecord::Base
   belongs_to :team
-  belongs_to :issue
+  has_one :issue
 end

@@ -9,8 +9,8 @@ module SprintTeams
         base.send(:include, InstanceMethods)
         base.class_eval do
           unloadable
-          has_one :teams, :dependent => :destroy
-          has_one :issue_teams_data, :dependent => :destroy
+          #has_one :team, :dependent => :destroy
+          has_one :issue_teams_datum, :dependent => :destroy
          end
       end
 
@@ -40,7 +40,7 @@ module SprintTeams
         end
 
         def issue_sprint
-          if r = IssueTeamsDatum.find_by(issues_id: id)
+          if r = IssueTeamsDatum.find_by(issue_id: id)
             r.sprint
           end
         end
@@ -51,7 +51,7 @@ module SprintTeams
 
         private
           def get_team_relation
-            return Team.joins('inner join issue_teams_data on teams.id = issue_teams_data.teams_id').find_by('issue_teams_data.issues_id' => id)
+            return Team.joins('inner join issue_teams_data on teams.id = issue_teams_data.team_id').find_by('issue_teams_data.issue_id' => id)
           end
       end
     end
