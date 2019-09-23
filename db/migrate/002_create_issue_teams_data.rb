@@ -1,4 +1,4 @@
-class CreateIssueTeamsData < ActiveRecord::Migration[5.2]
+class CreateIssueTeamsData < ActiveRecord::Migration
   def change
     create_table :issue_teams_data do |t|
       t.belongs_to :teams, null: false

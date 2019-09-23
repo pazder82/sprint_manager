@@ -5,6 +5,10 @@ module SprintTeams
         save_sprint_teams_values(context)
       end
 
+      def controller_issues_new_after_save(context={})
+        save_sprint_teams_values(context)
+      end
+
       def controller_issues_edit_after_save(context={})
         save_sprint_teams_values(context)
       end

@@ -1,4 +1,4 @@
-class ChangeIssueTeamsData < ActiveRecord::Migration[5.2]
+class ChangeIssueTeamsData < ActiveRecord::Migration
   def change
     change_table :issue_teams_data do |t|
       t.rename :teams_id, :team_id
