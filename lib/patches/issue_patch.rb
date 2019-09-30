@@ -1,4 +1,3 @@
-#require 'pry'
 require_dependency 'issue'
 
 module SprintTeams
@@ -9,7 +8,6 @@ module SprintTeams
         base.send(:include, InstanceMethods)
         base.class_eval do
           unloadable
-          #has_one :team, :dependent => :destroy
           has_one :issue_teams_datum, :dependent => :destroy
          end
       end
@@ -47,6 +45,10 @@ module SprintTeams
 
         def print_inspect
           binding.pry
+        end
+
+        def teams_relations
+          TagsRelations.new(self, tags.to_a)
         end
 
         private

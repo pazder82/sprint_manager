@@ -17,14 +17,8 @@ module SprintTeams
 
           alias_method :available_filters_without_sprint_teams, :available_filters
           alias_method :available_filters, :available_filters_with_sprint_teams
-
-          #add_available_column QueryTeamsColumn.new(:teams_relations, caption: :teams)
         end
       end
-
-      #class QueryTeamsColumn < QueryColumn
-      #  def css_classes; 'teams' end
-      #end
 
       module InstanceMethods
         def statement_with_sprint_teams
