@@ -24,16 +24,16 @@ module SprintTeams
 
     module IssueQueryPatch
       def self.included(base)
-        base.send(:include, InstanceMethods)
+        #base.send(:include, InstanceMethods)
         base.class_eval do
-          available_columns << QueryColumn.new(:team, :caption => :label_team, :sortable => true)
-          available_columns << QueryColumn.new(:team_sprint, :caption => :label_sprint, :sortable => true)
+          available_columns << QueryColumn.new(:team, :caption => :label_team)#, :sortable => "#{Team.table_name}.team")
+          available_columns << QueryColumn.new(:issue_sprint, :caption => :label_sprint)#, :sortable => "#{IssueTeamsDatum.table_name}.sprint")
         end
       end
 
-      module InstanceMethods
+      #module InstanceMethods
 
-      end
+      #end
     end
 
   end
