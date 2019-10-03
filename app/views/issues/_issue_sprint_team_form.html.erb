@@ -2,17 +2,18 @@
     <%#= instance_variable_names.inspect %>
     <%# {"ids"=>["3", "4", "5"]} %>
       <p>
+        <% isbulk = (params[:action] == 'bulk_edit') || (params[:action] == 'bulk_update') %>
         <%= f.label :team %>
         <%= f.select :team, Team.all.collect {|p| [ p.team, p.id ] },
-                     :include_blank => (params[:action] != 'bulk_edit') ? true : t(:label_no_change_option),
-                     :selected => params[:action] != 'bulk_edit' ? (@issue.team_id ? @issue.team_id : '') : '' %>
+                     :include_blank => isbulk ? t(:label_no_change_option) : true,
+                     :selected => isbulk ? '' : @issue.team_id %>
       </p>
       <p>
         <%= f.label :sprint %>
-        <% if params[:action] == 'bulk_edit' -%>
+        <% if isbulk -%>
           <%= f.text_field :sprint %>
         <% else -%>
-          <%= f.text_field :sprint, value: (@issue.issue_sprint ? @issue.issue_sprint : '') %>
+          <%= f.text_field :sprint, value: @issue.issue_sprint %>
         <% end -%>
         <%= button_tag "Current", type: 'button', onclick: "setCurrentSprint()" %>
         <%= button_tag "Next", type: 'button', onclick: "setNextSprint()" %>
