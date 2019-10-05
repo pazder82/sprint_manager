@@ -1,0 +1,17 @@
+<%# if User.current.allowed_to?(:edit_tags, @project) %>
+  <li class="folder">
+    <a href="#" class="submenu"><%= l(:label_team) %></a>
+    <ul>
+      <li>
+        <% Team.find_each do |team| %>
+          <%= context_menu_link team.team,
+                                edit_issue_team_path(:ids => @issue_ids, :team_id => team.id),
+                                :remote => true %> </li>
+        <%#= context_menu_link l(:button_add),
+                                edit_issue_tags_path(:ids => @issue_ids),
+                                :remote => true,
+                                :class => 'icon-add' %></li>
+         <% end %>
+    </ul>
+  </li>
+<%# end %>
