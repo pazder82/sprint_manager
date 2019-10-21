@@ -6,7 +6,7 @@ Redmine::Plugin.register :sprint_manager do
   url 'http://www.flowmon.com'
   author_url 'http://www.flowmon.com'
 
-  settings :default => {'empty' => true}, :partial => 'settings/general'
+  settings :default => {'empty' => true}, :partial => 'settings/settings'
 
   menu :application_menu, :teams, { :controller => 'teams', :action => 'index' },
       :caption => :label_teams,
