@@ -2,16 +2,28 @@
   <li class="folder">
     <a href="#" class="submenu"><%= l(:label_team) %></a>
     <ul>
-      <li>
         <% Team.find_each do |team| %>
+          <li>
           <%= context_menu_link team.team,
                                 edit_issue_team_path(:ids => @issue_ids, :team_id => team.id),
-                                :remote => true %> </li>
-        <%#= context_menu_link l(:button_add),
-                                edit_issue_tags_path(:ids => @issue_ids),
-                                :remote => true,
-                                :class => 'icon-add' %></li>
+                                :remote => true %>
+          </li>
          <% end %>
+    </ul>
+  </li>
+  <li class="folder">
+    <a href="#" class="submenu"><%= l(:label_sprint) %></a>
+    <ul>
+      <li>
+        <%= context_menu_link "Current",
+                              edit_issue_team_path(:ids => @issue_ids, :sprint => "current"),
+                              :remote => true %>
+      </li>
+      <li>
+        <%= context_menu_link "Next",
+                              edit_issue_team_path(:ids => @issue_ids, :sprint => "next"),
+                              :remote => true %>
+      </li>
     </ul>
   </li>
 <%# end %>
