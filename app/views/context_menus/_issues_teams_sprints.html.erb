@@ -1,0 +1,37 @@
+  <li class="folder">
+    <a href="#" class="submenu"><%= l(:label_team) %></a>
+    <ul>
+      <li>
+        <%= context_menu_link "(No team)",
+                              update_issue_team_path(:ids => @issue_ids, :team_id => 0),
+                              :remote => false %>
+      </li>
+      <% Team.find_each do |team| %>
+        <li>
+          <%= context_menu_link team.team,
+                                update_issue_team_path(:ids => @issue_ids, :team_id => team.id),
+                                :remote => false %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+  <li class="folder">
+    <a href="#" class="submenu"><%= l(:label_sprint) %></a>
+    <ul>
+      <li>
+        <%= context_menu_link "(No sprint)",
+                              update_issue_team_path(:ids => @issue_ids, :sprint => "no"),
+                              :remote => false %>
+      </li>
+      <li>
+        <%= context_menu_link "Current",
+                              update_issue_team_path(:ids => @issue_ids, :sprint => "current"),
+                              :remote => false %>
+      </li>
+      <li>
+        <%= context_menu_link "Next",
+                              update_issue_team_path(:ids => @issue_ids, :sprint => "next"),
+                              :remote => false %>
+      </li>
+    </ul>
+  </li>
