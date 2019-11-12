@@ -2,4 +2,4 @@
 # See: http://guides.rubyonrails.org/routing.html
 
 resources :teams
-get :edit_issue_team, :to => 'issue_team#edit'
+get :update_issue_team, :to => 'issue_team#update'
