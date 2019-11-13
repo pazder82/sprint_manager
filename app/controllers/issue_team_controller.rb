@@ -29,9 +29,9 @@ class IssueTeamController < ApplicationController
           elsif @sprint == "no"
             issue_teams_datum[:sprint] = nil
           end
+          issue_teams_datum.save
+          flash[:notice] = l(:notice_successful_update)
         end
-        issue_teams_datum.save
-        flash[:notice] = l(:notice_successful_update)
       end
     end
     redirect_to_referer_or { render :text => 'Team sprint updated.', :layout => true }
