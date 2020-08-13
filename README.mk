@@ -1,24 +1,21 @@
-= Sprint Manager Plugin Documentation
+# Sprint Manager Plugin Documentation
 
-== Installation:
+## Installation
 
 * Copy sprint_manager plugin to {RAILS_APP}/plugins on your redmine path
 * Run
-<pre>
+```
 bundle install --without development RAILS_ENV=production
-</pre>
-* Run
-<pre>
 bundle exec rake redmine:plugins NAME=sprint_manager RAILS_ENV=production
-</pre>
+```
 
-== Uninstall:
+## Uninstall:
 
 * Run
-<pre>
+```
 bundle exec rake redmine:plugins NAME=sprint_manager VERSION=0 RAILS_ENV=production
-</pre>
+```
 * Remove the plugin directory
-<pre>
+```
 rm -r plugins/sprint_manager
-</pre>
+```
