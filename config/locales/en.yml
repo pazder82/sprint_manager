@@ -6,3 +6,5 @@ en:
   label_sprint: Sprint
   filter_team: Team
   filter_sprint: Sprint
+  field_journal_team: Team
+  field_journal_sprint: Sprint

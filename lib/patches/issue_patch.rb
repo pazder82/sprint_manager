@@ -31,12 +31,6 @@ module SprintTeams
           end
         end
 
-        def team_sprints
-          if r = Team.all
-            r.to_json
-          end
-        end
-
         def issue_sprint
           if r = IssueTeamsDatum.find_by(issue_id: id)
             r.sprint

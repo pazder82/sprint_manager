@@ -36,7 +36,7 @@
   function getSelectedTeamSprint() {
     var e = document.getElementById('issue_teams_data_team');
     var issue_team_id = e.options[e.selectedIndex].value;
-    <% team_sprints = "{}" %>
+    <% team_sprints = "" %>
     <% if r = Team.all %>
         <% team_sprints = r.to_json %>
     <% end %>

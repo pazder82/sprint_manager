@@ -9,7 +9,7 @@ module SprintTeams
         save_sprint_teams_values(context)
       end
 
-      def controller_issues_edit_after_save(context={})
+      def controller_issues_edit_before_save(context={})
         save_sprint_teams_values(context)
       end
 
@@ -17,6 +17,11 @@ module SprintTeams
         # Current SprintTeam values for this issue
         old_value = Issue.find(context[:issue].id)
         old_team_id = old_value.team_id.to_s
+        old_team = Team.find_by(id: old_team_id)
+        old_team_name = nil
+        if !old_team.blank?
+          old_team_name = old_team.team
+        end
         old_issue_sprint = old_value.issue_sprint.to_s
 
         # New SprintTeam values inserted by user
@@ -26,6 +31,13 @@ module SprintTeams
             new_team_id = old_team_id
           else
             new_team_id = nil
+          end
+        end
+        new_team_name = nil
+        if !new_team_id.nil? && !new_team_id.blank?
+          new_team = Team.find_by(id: new_team_id)
+          if !new_team.blank?
+            new_team_name = new_team.team
           end
         end
 
@@ -64,8 +76,24 @@ module SprintTeams
             # Update row
             new_value.save
           end
+
+          # Create record into journal
+          issue = context[:issue]
+          if (new_team_id != old_team_id)
+            issue.current_journal.details << JournalDetail.new(property: 'attr',
+                                                               prop_key: 'journal_team',
+                                                               old_value: old_team_name,
+                                                               value: new_team_name)
+          end
+          if (new_issue_sprint != old_issue_sprint)
+            issue.current_journal.details << JournalDetail.new(property: 'attr',
+                                                               prop_key: 'journal_sprint',
+                                                               old_value: old_issue_sprint,
+                                                               value: new_issue_sprint)
+          end
         end
       end
+
     end
   end
 end
