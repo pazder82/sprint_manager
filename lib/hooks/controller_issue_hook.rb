@@ -33,12 +33,11 @@ module SprintTeams
             new_team_id = nil
           end
         end
+
         new_team_name = nil
-        if !new_team_id.nil? && !new_team_id.blank?
+        if !new_team_id.blank?
           new_team = Team.find_by(id: new_team_id)
-          if !new_team.blank?
-            new_team_name = new_team.team
-          end
+          new_team_name = new_team.team if !new_team.blank?
         end
 
         new_issue_sprint = context[:params][:issue_teams_data][:sprint] if context[:params][:issue_teams_data]
@@ -52,23 +51,24 @@ module SprintTeams
         new_issue_sprint = nil if new_team_id.blank?
 
         # Update model
-        changed = false
+        team_changed = false
+        sprint_changed = false
         new_value = IssueTeamsDatum.find_by('issue_id' => context[:issue].id)
         if !new_value
           # Not yet existing in table - create new row
           new_value = IssueTeamsDatum.new
           new_value[:issue_id] = context[:issue].id
         end
-        if (new_team_id != old_team_id)
+        if (new_team_id != old_team_id) && !(new_team_id.blank? && old_team_name.blank?)
           new_value[:team_id] = (new_team_id.blank? ? nil : new_team_id.to_i)
-          changed = true
+          team_changed = true
         end
-        if (new_issue_sprint != old_issue_sprint)
+        if (new_issue_sprint != old_issue_sprint) && !(new_issue_sprint.blank? && old_issue_sprint.blank?)
           new_value[:sprint] = (new_issue_sprint.blank? ? nil : new_issue_sprint.to_i)
-          changed = true
+          sprint_changed = true
         end
 
-        if changed
+        if team_changed || sprint_changed
           if (new_issue_sprint.blank? && new_team_id.blank?)
             # All values have been cleared - remove row
             new_value.destroy
@@ -79,13 +79,13 @@ module SprintTeams
 
           # Create record into journal
           issue = context[:issue]
-          if (new_team_id != old_team_id)
+          if (new_team_id != old_team_id) && team_changed
             issue.current_journal.details << JournalDetail.new(property: 'attr',
                                                                prop_key: 'journal_team',
                                                                old_value: old_team_name,
                                                                value: new_team_name)
           end
-          if (new_issue_sprint != old_issue_sprint)
+          if (new_issue_sprint != old_issue_sprint) && sprint_changed
             issue.current_journal.details << JournalDetail.new(property: 'attr',
                                                                prop_key: 'journal_sprint',
                                                                old_value: old_issue_sprint,
