@@ -79,17 +79,19 @@ module SprintTeams
 
           # Create record into journal
           issue = context[:issue]
-          if (new_team_id != old_team_id) && team_changed
-            issue.current_journal.details << JournalDetail.new(property: 'attr',
+          if !issue.blank? && !issue.current_journal.blank?
+            if (new_team_id != old_team_id) && team_changed
+              issue.current_journal.details << JournalDetail.new(property: 'attr',
                                                                prop_key: 'journal_team',
                                                                old_value: old_team_name,
                                                                value: new_team_name)
-          end
-          if (new_issue_sprint != old_issue_sprint) && sprint_changed
-            issue.current_journal.details << JournalDetail.new(property: 'attr',
+            end
+            if (new_issue_sprint != old_issue_sprint) && sprint_changed
+              issue.current_journal.details << JournalDetail.new(property: 'attr',
                                                                prop_key: 'journal_sprint',
                                                                old_value: old_issue_sprint,
                                                                value: new_issue_sprint)
+            end
           end
         end
       end
