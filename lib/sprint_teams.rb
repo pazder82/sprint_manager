@@ -4,6 +4,7 @@ require 'hooks/controller_issue_hook'
 require 'hooks/views_context_menus_hook'
 require 'patches/issue_patch'
 require 'patches/issue_query_patch'
+require 'patches/agile_query_patch'
 
 module SprintTeams
 
